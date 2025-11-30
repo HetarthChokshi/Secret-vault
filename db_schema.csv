@@ -1,0 +1,25 @@
+table,column,type,constraints
+categories,id,INT,"PRIMARY KEY, auto increment"
+categories,name,TEXT,NOT NULL
+categories,created_at,TIMESTAMP,DEFAULT NOW()
+services,id,INT,"PRIMARY KEY, auto increment"
+services,category_id,INT,REFERENCES categories(id) ON DELETE CASCADE
+services,name,TEXT,NOT NULL
+services,created_at,TIMESTAMP,DEFAULT NOW()
+accounts,id,INT,"PRIMARY KEY, auto increment"
+accounts,service_id,INT,REFERENCES services(id) ON DELETE CASCADE
+accounts,name,TEXT,NOT NULL
+accounts,data,JSONB,NOT NULL
+accounts,version,INT,DEFAULT 1
+accounts,previous_id,INT,REFERENCES accounts(id)
+accounts,is_deleted,BOOLEAN,DEFAULT FALSE
+accounts,deleted_at,TIMESTAMP,
+accounts,updated_at,TIMESTAMP,DEFAULT NOW()
+accounts,updated_by,INT,
+accounts,created_at,TIMESTAMP,DEFAULT NOW()
+account_history,id,INT,"PRIMARY KEY, auto increment"
+account_history,account_id,INT,REFERENCES accounts(id)
+account_history,name,TEXT,
+account_history,data,JSONB,
+account_history,version,INT,
+account_history,created_at,TIMESTAMP,DEFAULT NOW()
